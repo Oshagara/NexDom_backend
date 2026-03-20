@@ -1,0 +1,262 @@
+{
+  "info": {
+    "name": "Infinity Housing API",
+    "description": "Postman collection for Infinity Housing backend API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "version": "1.0.0"
+  },
+  "item": [
+    {
+      "name": "Auth",
+      "item": [
+        {
+          "name": "Register",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "url": { "raw": "http://localhost:2025/auth/register", "protocol": "http", "host": ["localhost"], "port": "2025", "path": ["auth", "register"] },
+            "body": { "mode": "raw", "raw": "{\n  \"email\": \"agent@example.com\",\n  \"password\": \"Password123!\",\n  \"name\": \"Agent One\",\n  \"role\": \"agent\"\n}" }
+          }
+        },
+        {
+          "name": "Login",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "url": { "raw": "http://localhost:3000/auth/login", "protocol": "http", "host": ["localhost"], "port": "3000", "path": ["auth", "login"] },
+            "body": { "mode": "raw", "raw": "{\n  \"email\": \"agent@example.com\",\n  \"password\": \"Password123!\"\n}" }
+          }
+        },
+        {
+          "name": "Profile (JWT)",
+          "request": {
+            "method": "GET",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{ACCESS_TOKEN}}" }
+            ],
+            "url": { "raw": "http://localhost:3000/auth/profile", "protocol": "http", "host": ["localhost"], "port": "3000", "path": ["auth", "profile"] }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Properties",
+      "item": [
+        {
+          "name": "Create Property",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "Authorization", "value": "Bearer {{ACCESS_TOKEN}}" }
+            ],
+            "url": { "raw": "http://localhost:3000/property", "protocol": "http", "host": ["localhost"], "port": "3000", "path": ["property"] },
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "payload",
+                  "value": "{\n  \"listingType\": \"For Sale\",\n  \"propertyType\": \"Duplex\",\n  \"price\": 25000000,\n  \"currency\": \"NGN\",\n  \"isNegotiable\": false,\n  \"address\": {\n    \"street\": \"10 Estate Rd\",\n    \"area\": \"Lekki\",\n    \"city\": \"Lagos\",\n    \"state\": \"Lagos\",\n    \"lga\": \"Eti-Osa\",\n    \"country\": \"Nigeria\",\n    \"coordinates\": {\n      \"type\": \"Point\",\n      \"coordinates\": [3.4955, 6.4508]\n    }\n  },\n  \"bedrooms\": 4,\n  \"bathrooms\": 3,\n  \"toilets\": 4,\n  \"area\": { \"value\": 300, \"unit\": \"sqm\" },\n  \"plotSize\": { \"value\": 500, \"unit\": \"sqm\" },\n  \"yearBuilt\": 2018,\n  \"floors\": 2,\n  \"furnishing\": \"Semi-Furnished\",\n  \"flooring\": [\"Tiles\", \"Hardwood\"],\n  \"listedBy\": {\n    \"name\": \"Agent One\",\n    \"phone\": \"+2348012345678\",\n    \"role\": \"agent\",\n    \"agency\": \"Infinity Estates\"\n  },\n  \"availability\": \"Available\",\n  \"images\": [\"uploads/properties/image1.jpg\", \"uploads/properties/image2.jpg\"],\n  \"videos\": [],\n  \"floorPlan\": \"uploads/properties/floorplan.pdf\",\n  \"features\": {\n    \"interior\": [\"Air Conditioning\", \"Ensuite Bathrooms\"],\n    \"exterior\": [\"Garden\", \"Balcony\"],\n    \"security\": [\"24/7 Security\", \"CCTV\"],\n    \"amenities\": [\"Gym\", \"Pool\"]\n  },\n  \"locationAdvantages\": [{ \"name\": \"Mall\", \"type\": \"Retail\", \"distance\": \"2km\" }],\n  \"financialDetails\": { \"maintenanceFee\": 5000, \"agencyFee\": \"5%\", \"paymentPlan\": [\"Upfront\", \"Installments\"] },\n  \"legalStatus\": { \"ownership\": \"Freehold\", \"cOfO\": true, \"governorConsent\": false },\n  \"additionalInfo\": { \"petPolicy\": \"Allowed\", \"targetTenant\": \"Families\", \"proximityToRoad\": \"200m\" }\n}",
+                  "type": "text"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Get All Properties",
+          "request": {
+            "method": "GET",
+            "url": { "raw": "http://localhost:3000/property", "protocol": "http", "host": ["localhost"], "port": "3000", "path": ["property"] }
+          }
+        },
+        {
+          "name": "Get Property by ID",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "http://localhost:3000/property/{{PROPERTY_ID}}",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "3000",
+              "path": ["property", "{{PROPERTY_ID}}"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Saved Properties",
+      "item": [
+        {
+          "name": "Save Property",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "Authorization", "value": "Bearer {{ACCESS_TOKEN}}" }
+            ],
+            "url": { "raw": "http://localhost:3000/saved", "protocol": "http", "host": ["localhost"], "port": "3000", "path": ["saved"] },
+            "body": { "mode": "raw", "raw": "{\n  \"propertyId\": \"{{PROPERTY_ID}}\",\n  \"userId\": \"{{USER_ID}}\"\n}" }
+          }
+        },
+        {
+          "name": "Get Saved Properties for Agent",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{ACCESS_TOKEN}}" }],
+            "url": { "raw": "http://localhost:3000/saved/{{AGENT_ID}}", "protocol": "http", "host": ["localhost"], "port": "3000", "path": ["saved", "{{AGENT_ID}}"] }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Payment",
+      "item": [
+        {
+          "name": "Initiate Payment",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "Authorization", "value": "Bearer {{ACCESS_TOKEN}}" }
+            ],
+            "url": { "raw": "http://localhost:3000/payment/initiate", "protocol": "http", "host": ["localhost"], "port": "3000", "path": ["payment", "initiate"] },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"tx_ref\": \"test-{{uniqueId}}\",\n  \"amount\": 1000,\n  \"currency\": \"NGN\",\n  \"email\": \"agent@example.com\",\n  \"name\": \"Agent One\"\n}"
+            }
+          }
+        },
+        {
+          "name": "Verify Payment",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{ACCESS_TOKEN}}" }],
+            "url": { "raw": "http://localhost:3000/payment/verify?tx_ref={{TX_REF}}", "protocol": "http", "host": ["localhost"], "port": "3000", "path": ["payment", "verify"], "query": [{ "key": "tx_ref", "value": "{{TX_REF}}" }] }
+          }
+        },
+        {
+          "name": "Get All Payments (admin)",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{ACCESS_TOKEN}}" }],
+            "url": { "raw": "http://localhost:3000/payment/all", "protocol": "http", "host": ["localhost"], "port": "3000", "path": ["payment", "all"] }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Wallet",
+      "item": [
+        {
+          "name": "Get Wallet",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{ACCESS_TOKEN}}" }],
+            "url": { "raw": "http://localhost:3000/wallet/{{USER_ID}}", "protocol": "http", "host": ["localhost"], "port": "3000", "path": ["wallet", "{{USER_ID}}"] }
+          }
+        },
+        {
+          "name": "Fund Wallet",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "Authorization", "value": "Bearer {{ACCESS_TOKEN}}" }
+            ],
+            "url": { "raw": "http://localhost:3000/wallet/fund", "protocol": "http", "host": ["localhost"], "port": "3000", "path": ["wallet", "fund"] },
+            "body": { "mode": "raw", "raw": "{\n  \"userId\": \"{{USER_ID}}\",\n  \"amount\": 5000\n}" }
+          }
+        },
+        {
+          "name": "Withdraw",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "Authorization", "value": "Bearer {{ACCESS_TOKEN}}" }
+            ],
+            "url": { "raw": "http://localhost:3000/wallet/withdraw", "protocol": "http", "host": ["localhost"], "port": "3000", "path": ["wallet", "withdraw"] },
+            "body": { "mode": "raw", "raw": "{\n  \"userId\": \"{{USER_ID}}\",\n  \"amount\": 2000\n}" }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Escrow",
+      "item": [
+        {
+          "name": "Initiate Escrow",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "Authorization", "value": "Bearer {{ACCESS_TOKEN}}" }
+            ],
+            "url": { "raw": "http://localhost:3000/escrow/initiate", "protocol": "http", "host": ["localhost"], "port": "3000", "path": ["escrow", "initiate"] },
+            "body": { "mode": "raw", "raw": "{\n  \"propertyId\": \"{{PROPERTY_ID}}\",\n  \"buyerId\": \"{{USER_ID}}\",\n  \"amount\": 5000000\n}" }
+          }
+        },
+        {
+          "name": "Get Escrow",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{ACCESS_TOKEN}}" }],
+            "url": { "raw": "http://localhost:3000/escrow/{{ESCROW_ID}}", "protocol": "http", "host": ["localhost"], "port": "3000", "path": ["escrow", "{{ESCROW_ID}}"] }
+          }
+        },
+        {
+          "name": "Release Escrow",
+          "request": {
+            "method": "PUT",
+            "header": [{ "key": "Authorization", "value": "Bearer {{ACCESS_TOKEN}}" }],
+            "url": { "raw": "http://localhost:3000/escrow/{{ESCROW_ID}}/release", "protocol": "http", "host": ["localhost"], "port": "3000", "path": ["escrow", "{{ESCROW_ID}}", "release"] }
+          }
+        },
+        {
+          "name": "Cancel Escrow",
+          "request": {
+            "method": "PUT",
+            "header": [{ "key": "Authorization", "value": "Bearer {{ACCESS_TOKEN}}" }],
+            "url": { "raw": "http://localhost:3000/escrow/{{ESCROW_ID}}/cancel", "protocol": "http", "host": ["localhost"], "port": "3000", "path": ["escrow", "{{ESCROW_ID}}", "cancel"] }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Admin & Activity",
+      "item": [
+        {
+          "name": "Get Admin Dashboard",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{ACCESS_TOKEN}}" }],
+            "url": { "raw": "http://localhost:3000/private", "protocol": "http", "host": ["localhost"], "port": "3000", "path": ["private"] }
+          }
+        },
+        {
+          "name": "Create Admin",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "Authorization", "value": "Bearer {{ACCESS_TOKEN}}" }
+            ],
+            "url": { "raw": "http://localhost:3000/private/create-admin", "protocol": "http", "host": ["localhost"], "port": "3000", "path": ["private", "create-admin"] },
+            "body": { "mode": "raw", "raw": "{\n  \"name\": \"Admin user\",\n  \"email\": \"admin@example.com\",\n  \"password\": \"AdminPass123!\"\n}" }
+          }
+        },
+        {
+          "name": "Get Activity",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{ACCESS_TOKEN}}" }],
+            "url": { "raw": "http://localhost:3000/private/activity", "protocol": "http", "host": ["localhost"], "port": "3000", "path": ["private", "activity"] }
+          }
+        }
+      ]
+    }
+  ],
+  "event": []
+}
