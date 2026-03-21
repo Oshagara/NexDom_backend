@@ -13,7 +13,7 @@ async function bootstrap() {
     prefix: '/uploads/', // public URL prefix
   });
   app.enableCors({
-    origin: 'http://localhost:2025', // <-- allow your frontend dev server
+     origin: (origin, callback) => callback(null, true),
     credentials: true, // if you use cookies/auth
     allowedHeaders: ['Authorization', 'Content-Type'],
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS',
