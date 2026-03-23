@@ -49,9 +49,9 @@ export class MailService {
     const transporter = this.createTransporter();
     try {
       await transporter.sendMail({
-        from: `"Infinity Housing" <${process.env.MAIL_USER}>`,
+        from: `"NexDom" <${process.env.MAIL_USER}>`,
         to: email,
-        subject: 'Resend: Your Verification Code - Infinity Housing',
+        subject: 'Resend: Your Verification Code - NexDom',
         html: `
       <div style="font-family: sans-serif; line-height: 1.6;">
         <h2>Your Verification Code</h2>
